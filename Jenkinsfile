@@ -2,6 +2,7 @@ pipeline {
     agent any
     environment {
         DOCKER_HUB_REPO = "kcharette/flask-app"
+        REGISTRY_CREDENTIAL = "docker_hub"
         CONTAINER_NAME = "flask-container"
         STUB_VALUE = "200"
     }
@@ -21,8 +22,10 @@ pipeline {
                 sh 'docker image tag $DOCKER_HUB_REPO:latest $DOCKER_HUB_REPO:$BUILD_NUMBER'
 
                 //  Pushing Image to Repository
-                sh 'docker push $DOCKER_HUB_REPO:$BUILD_NUMBER'
-                sh 'docker push $DOCKER_HUB_REPO:latest'
+                docker.withRegistry( '', REGISTRY_CREDENTIAL ) {
+                    sh 'docker push $DOCKER_HUB_REPO:$BUILD_NUMBER'
+                    sh 'docker push $DOCKER_HUB_REPO:latest'
+			    }
                 
                 echo "Image built and pushed to repository"
             }
