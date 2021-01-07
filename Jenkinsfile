@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         DOCKER_HUB_REPO = "kcharette/flask-app"
-        REGISTRY_CREDENTIAL = "docker_hub"
+        REGISTRY_CREDENTIAL = "dockerhub"
         CONTAINER_NAME = "flask-container"
         STUB_VALUE = "200"
     }
